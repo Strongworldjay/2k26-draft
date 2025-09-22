@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* App theming */
+:root {
+  --maroon: #7a0808;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  @apply bg-black text-white font-ui;
+}
+
+/* Fancy big title */
+.title-emboss {
+  letter-spacing: 0.08em;
+  text-shadow: 0 2px 0 rgba(255,255,255,0.08), 0 8px 20px rgba(0,0,0,0.85);
+}
+
+/* Circle player head */
+.player-dot {
+  @apply rounded-full w-20 h-20 md:w-24 md:h-24 flex items-center justify-center;
+  background: radial-gradient(65% 65% at 30% 30%, #8b0f0f 0%, #5d0707 100%);
+  border: 3px solid rgba(255,255,255,0.06);
+  box-shadow: inset 0 4px 12px rgba(0,0,0,0.5), 0 0 0 2px rgba(0,0,0,0.35);
+  transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
+}
+
+.player-dot:hover {
+  transform: scale(1.05);
+  box-shadow: inset 0 6px 16px rgba(0,0,0,0.65), 0 0 0 2px rgba(255,255,255,0.1);
+}
+
+.player-dot.disabled {
+  filter: grayscale(.9) brightness(.6);
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.tooltip {
+  @apply absolute px-3 py-2 rounded-lg bg-neutral-900/95 border border-white/10 text-sm;
+  white-space: nowrap;
+  transform: translate(-50%, -120%);
+}

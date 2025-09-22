@@ -7,7 +7,7 @@ export default function PlayerDot({ player, onClick, disabled, rank }) {
   const [hover, setHover] = useState(false);
   const tier = tierFromOverall(player.overall);
   const teamClass = player.team ? `${player.team}-bg` : 'freeagent-bg';
-  const img = getPlayerImage(player);
+  const img = getPlayerImage(player, { warn: true });
 
   return (
     <div className="relative">

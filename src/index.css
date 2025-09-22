@@ -44,3 +44,57 @@ body {
   white-space: nowrap;
   transform: translate(-50%, -120%);
 }
+/* === Team Ring Colors (with CSS var for ring) === */
+.cavaliers-bg { --team-color:#7c0c3b; background-color:#7c0c3b; color:whitesmoke; }
+.hawks-bg     { --team-color:#ab112a; background-color:#ab112a; color:black; }
+.celtics-bg   { --team-color:#0a7035; background-color:#0a7035; color:black; }
+.nets-bg      { --team-color:#000000; background-color:#000000; color:#FFFFFF; }
+.hornets-bg   { --team-color:#1D1160; background-color:#1D1160; color:#00788C; }
+.bulls-bg     { --team-color:#CE1141; background-color:#CE1141; color:black; }
+.mavericks-bg { --team-color:#1482cb; background-color:#1482cb; color:#B8C4CA; }
+.nuggets-bg   { --team-color:#0E2240; background-color:#0E2240; color:whitesmoke; }
+.pistons-bg   { --team-color:#8e0d23; background-color:#8e0d23; color:#BEC0C2; }
+.warriors-bg  { --team-color:#1D428A; background-color:#1D428A; color:whitesmoke; }
+.rockets-bg   { --team-color:#0F0708; background-color:#0F0708; color:#C4CED4; }
+.pacers-bg    { --team-color:#FDBB30; background-color:#FDBB30; color:#002D62; }
+.clippers-bg  { --team-color:#1D428A; background-color:#1D428A; color:#BEC0C2; }
+.lakers-bg    { --team-color:#552583; background-color:#552583; color:whitesmoke; }
+.grizzlies-bg { --team-color:#12173F; background-color:#12173F; color:#5D76A9; }
+.heat-bg      { --team-color:#98002E; background-color:#98002E; color:white; }
+.bucks-bg     { --team-color:#00471B; background-color:#00471B; color:#EEE1C6; }
+.timberwolves-bg{--team-color:#0C2340; background-color:#0C2340; color:#9EA2A2; }
+.pelicans-bg  { --team-color:#b48c42; background-color:#b48c42; color:#0C2340; }
+.knicks-bg    { --team-color:#F58426; background-color:#F58426; color:#f0f3f5; }
+.thunder-bg   { --team-color:#3722bb; background-color:#3722bb; color:whitesmoke; }
+.magic-bg     { --team-color:#053f63; background-color:#053f63; color:#C4CED4; }
+.sixers-bg    { --team-color:#002B5C; background-color:#002B5C; color:#C4CED4; }
+.suns-bg      { --team-color:#E56020; background-color:#E56020; color:#1D1160; }
+.trailblazers-bg{--team-color:#E03A3E; background-color:#E03A3E; color:#0F0708; }
+.kings-bg     { --team-color:#5A2D81; background-color:#5A2D81; color:#7f9099; }
+.spurs-bg     { --team-color:#C4CED4; background-color:#C4CED4; color:black; }
+.raptors-bg   { --team-color:#C5050C; background-color:#C5050C; color:black; }
+.jazz-bg      { --team-color:#002B5C; background-color:#002B5C; color:#23d5e9; }
+.wizards-bg   { --team-color:#E31837; background-color:#E31837; color:#002B5C; }
+.freeagent-bg { --team-color:gray;    background-color:gray;     color:black; border-color:gray; }
+
+/* Wrapper that paints the outer ring in team color */
+.player-ring {
+  padding: 4px;
+  border-radius: 9999px;
+  border: 4px solid var(--team-color);
+  display: inline-flex;
+}
+
+/* === Overall Tier Glows === */
+.glow { box-shadow: 0 0 0 2px rgba(255,255,255,0.06), inset 0 6px 16px rgba(0,0,0,0.65); }
+.glow-dm  { box-shadow: 0 0 14px 4px rgba(0,0,0,0.9), 0 0 28px 10px rgba(80,0,120,0.8); }   /* Dark Matter */
+.glow-go  { box-shadow: 0 0 18px 8px rgba(135,255,248,0.65); }                               /* Galaxy Opal */
+.glow-pd  { box-shadow: 0 0 18px 8px rgba(255,105,180,0.75); }                               /* Pink Diamond */
+.glow-dia { box-shadow: 0 0 16px 8px rgba(0,180,255,0.7); }                                   /* Diamond */
+.glow-ame { box-shadow: 0 0 16px 8px rgba(140,0,255,0.6); }                                   /* Amethyst */
+.glow-rub { box-shadow: 0 0 14px 6px rgba(200,0,0,0.7); }                                     /* Ruby */
+.glow-sap { box-shadow: 0 0 14px 6px rgba(0,80,255,0.65); }                                   /* Sapphire */
+.glow-em  { box-shadow: 0 0 12px 6px rgba(0,160,60,0.7); }                                    /* Emerald */
+.glow-gld { box-shadow: 0 0 12px 6px rgba(218,165,32,0.8); }                                  /* Gold */
+.glow-sil { box-shadow: 0 0 10px 5px rgba(180,180,180,0.7); }                                 /* Silver */
+.glow-brz { box-shadow: 0 0 10px 5px rgba(166,112,61,0.75); }                                 /* Bronze */

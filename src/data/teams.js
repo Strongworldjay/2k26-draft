@@ -8,7 +8,6 @@ export const TEAM_ABBR = {
   freeagent: 'FA'
 };
 
-// Pretty names (for headings)
 export const TEAM_NAME = {
   hawks: 'Atlanta Hawks', celtics: 'Boston Celtics', nets: 'Brooklyn Nets', hornets: 'Charlotte Hornets',
   bulls: 'Chicago Bulls', cavaliers: 'Cleveland Cavaliers', mavericks: 'Dallas Mavericks', nuggets: 'Denver Nuggets',
@@ -26,3 +25,38 @@ export function randomFranchise(exclude) {
   const pool = FRANCHISE_SLUGS.filter(s => !exclude?.includes(s));
   return pool[Math.floor(Math.random() * pool.length)];
 }
+
+/** Primary team colors (match your CSS --team-color values) */
+export const TEAM_COLOR = {
+  cavaliers: '#7c0c3b',
+  hawks: '#ab112a',
+  celtics: '#0a7035',
+  nets: '#25282A',
+  hornets: '#00788c',
+  bulls: '#CE1141',
+  mavericks: '#1482cb',
+  nuggets: '#0E2240',
+  pistons: '#8e0d23',
+  warriors: '#FFC72C',
+  rockets: '#CE1141',
+  pacers: '#FDBB30',
+  clippers: '#1D428A',
+  lakers: '#552583',
+  grizzlies: '#12173F',
+  heat: '#98002E',
+  bucks: '#00471B',
+  timberwolves: '#0C2340',
+  pelicans: '#b48c42',
+  knicks: '#F58426',
+  thunder: '#3722bb',
+  magic: '#0077c0',
+  sixers: '#002B5C',
+  suns: '#E56020',
+  trailblazers: '#E03A3E',
+  kings: '#5A2D81',
+  spurs: '#C4CED4',
+  raptors: '#C5050C',
+  jazz: '#7A3A9A',
+  wizards: '#E31837',
+  freeagent: 'gray'
+};

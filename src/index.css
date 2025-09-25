@@ -20,14 +20,14 @@ body{ @apply bg-black text-white font-ui; }
 .cavaliers-bg{--team-color:#7c0c3b;background-color:#7c0c3b;color:whitesmoke;}
 .hawks-bg{--team-color:#ab112a;background-color:#ab112a;color:black;}
 .celtics-bg{--team-color:#0a7035;background-color:#0a7035;color:black;}
-.nets-bg{--team-color:#000000;background-color:#000000;color:#FFFFFF;}
-.hornets-bg{--team-color:#1D1160;background-color:#1D1160;color:#00788C;}
+.nets-bg{--team-color:#25282A;background-color:#25282A;color:#FFFFFF;}
+.hornets-bg{--team-color:#00788c;background-color:#00788c;color:#00788C;}
 .bulls-bg{--team-color:#CE1141;background-color:#CE1141;color:black;}
 .mavericks-bg{--team-color:#1482cb;background-color:#1482cb;color:#B8C4CA;}
 .nuggets-bg{--team-color:#0E2240;background-color:#0E2240;color:whitesmoke;}
 .pistons-bg{--team-color:#8e0d23;background-color:#8e0d23;color:#BEC0C2;}
-.warriors-bg{--team-color:#1D428A;background-color:#1D428A;color:whitesmoke;}
-.rockets-bg{--team-color:#0F0708;background-color:#0F0708;color:#C4CED4;}
+.warriors-bg{--team-color:#FFC72C;background-color:#FFC72C;color:whitesmoke;}
+.rockets-bg{--team-color:#CE1141;background-color:#CE1141;color:#C4CED4;}
 .pacers-bg{--team-color:#FDBB30;background-color:#FDBB30;color:#002D62;}
 .clippers-bg{--team-color:#1D428A;background-color:#1D428A;color:#BEC0C2;}
 .lakers-bg{--team-color:#552583;background-color:#552583;color:whitesmoke;}
@@ -38,14 +38,14 @@ body{ @apply bg-black text-white font-ui; }
 .pelicans-bg{--team-color:#b48c42;background-color:#b48c42;color:#0C2340;}
 .knicks-bg{--team-color:#F58426;background-color:#F58426;color:#f0f3f5;}
 .thunder-bg{--team-color:#3722bb;background-color:#3722bb;color:whitesmoke;}
-.magic-bg{--team-color:#053f63;background-color:#053f63;color:#C4CED4;}
+.magic-bg{--team-color:#0077c0;background-color:#0077c0;color:#C4CED4;}
 .sixers-bg{--team-color:#002B5C;background-color:#002B5C;color:#C4CED4;}
 .suns-bg{--team-color:#E56020;background-color:#E56020;color:#1D1160;}
 .trailblazers-bg{--team-color:#E03A3E;background-color:#E03A3E;color:#0F0708;}
 .kings-bg{--team-color:#5A2D81;background-color:#5A2D81;color:#7f9099;}
 .spurs-bg{--team-color:#C4CED4;background-color:#C4CED4;color:black;}
 .raptors-bg{--team-color:#C5050C;background-color:#C5050C;color:black;}
-.jazz-bg{--team-color:#002B5C;background-color:#002B5C;color:#23d5e9;}
+.jazz-bg{--team-color:#7A3A9A;background-color:#7A3A9A;color:#23d5e9;}
 .wizards-bg{--team-color:#E31837;background-color:#E31837;color:#002B5C;}
 .freeagent-bg{--team-color:gray;background-color:gray;color:black;border-color:gray;}
 
@@ -74,6 +74,13 @@ body{ @apply bg-black text-white font-ui; }
 .rarity-ring.glow-very-rare{box-shadow:0 0 11px 5px rgba(150,0,255,.6);}
 .rarity-ring.glow-legendary{box-shadow:0 0 12px 6px rgba(218,165,32,.75);}
 .rarity-ring.glow-superstar{box-shadow:0 0 13px 6px rgba(255,40,40,.8);}
+
+/* --- Taken state: gray ring, no glow --- */
+.rarity-ring.taken{
+  --rarity:#8a8a8a;                 /* neutral gray ring */
+  box-shadow:none !important;       /* kill glow */
+  opacity:0.95;                     /* slight dim for clarity */
+}
 
 /* Inner core shows the team color behind the image (no gap) */
 .player-core{
@@ -107,6 +114,7 @@ body{ @apply bg-black text-white font-ui; }
   .rarity-ring.glow-legendary{box-shadow:0 0 10px 5px rgba(218,165,32,.7);}
   .rarity-ring.glow-superstar{box-shadow:0 0 11px 5px rgba(255,40,40,.75);}
 }
+
 /* Arrow styling for active team indicator */
 .arrow {
   display: inline-block;
@@ -117,6 +125,7 @@ body{ @apply bg-black text-white font-ui; }
 @media (min-width: 768px) {
   .arrow { font-size: 1.75rem; }  /* desktop */
 }
+
 /* --- New board fly-in animation --- */
 @keyframes dotFlyIn {
   0% {
@@ -145,4 +154,15 @@ body{ @apply bg-black text-white font-ui; }
 /* Respect reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   .dot-enter { animation: none; opacity: 1; transform: none; }
+}
+
+/* Panel frame + active glow */
+.panel {
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.panel-active {
+  /* Uses --franchise-color provided inline by SidePanel */
+  box-shadow:
+    0 0 0 2px var(--franchise-color),
+    0 0 24px 8px var(--franchise-color);
 }

@@ -8,12 +8,12 @@ const MIN_CENTERS = 4;
 
 /** Rarity weights (must match tier keys from tiers.js) */
 const RARITY_WEIGHTS = {
-  "common": 0.15,       // 60–74
-  "uncommon": 0.25,     // 75–79
+  "common": 0.19,       // 60–74
+  "uncommon": 0.42,     // 75–79
   "rare": 0.25,         // 80–85
-  "very-rare": 0.15,    // 86–89
-  "legendary": 0.15,    // 90–94
-  "superstar": 0.05,    // 95+
+  "very-rare": 0.10,    // 86–89
+  "legendary": 0.03,    // 90–94
+  "superstar": 0.01,    // 95+
 };
 
 /** -------------------- helpers -------------------- */

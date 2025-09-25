@@ -120,6 +120,7 @@ export default function App() {
           titleMobile={TEAM_ABBR[franchise1]}
           team={team1}
           rookie={rookie1}
+          isActive={activeTeam === 1} 
         />
 
         {/* Center Board + controls */}
@@ -166,6 +167,7 @@ export default function App() {
           titleMobile={TEAM_ABBR[franchise2]}
           team={team2}
           rookie={rookie2}
+          isActive={activeTeam === 2} 
         />
       </main>
 

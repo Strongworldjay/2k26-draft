@@ -20,6 +20,7 @@ export const ALL_PLAYERS = [
   { name: "De’Anthony Melton", team: "freeagent", position: "SG/PG", overall: 74 },
   { name: "Keon Johnson", team: "freeagent", position: "SG/SF", overall: 74 },
   { name: "Alec Burks", team: "freeagent", position: "SG/SF", overall: 74 },
+   { name: "Kj Martin Jr.", team: "jazz", position: "PF/SF", overall: 73 },
 
    { name: "Trae Young",               team: "hawks", position: "PG", overall: 90 },
   { name: "Kristaps Porzingis",       team: "hawks", position: "C",  overall: 85 },
@@ -32,7 +33,6 @@ export const ALL_PLAYERS = [
   { name: "Mouhamed Gueye",           team: "hawks", position: "PF", overall: 74 },
   { name: "Caleb Houstan",            team: "hawks", position: "SF", overall: 73 },
   { name: "Vit Krejci",               team: "hawks", position: "SF", overall: 73 },
-  { name: "Kobe Bufkin",              team: "hawks", position: "PG", overall: 71 },
   { name: "Asa Newell",               team: "hawks", position: "PF", overall: 71, rookie: true, rookieAuto: true },
   { name: "Keaton Wallace",           team: "hawks", position: "SG", overall: 70 },
   { name: "N’Faly Dante",             team: "hawks", position: "C",  overall: 68 },
@@ -61,7 +61,7 @@ export const ALL_PLAYERS = [
   { name: "RJ Luis Jr.", team: "celtics", position: "SG/SF", overall: 68 },
 
   { name: "Michael Porter Jr.", team: "nets", position: "SF/PF", overall: 82 },
-  { name: "Cameron Thomas", team: "nets", position: "SG/SF", overall: 80 },
+  { name: "Cam Thomas", team: "nets", position: "SG/SF", overall: 80 },
   { name: "Nic Claxton", team: "nets", position: "C", overall: 79 },
   { name: "Terance Mann", team: "nets", position: "SG/SF", overall: 75 },
   { name: "Ziaire Williams", team: "nets", position: "SF/SG", overall: 75 },
@@ -554,7 +554,6 @@ export const ALL_PLAYERS = [
   { name: "Georges Niang", team: "jazz", position: "PF", overall: 74 },
   { name: "Kevin Love", team: "jazz", position: "C/PF", overall: 73 },
   { name: "Taylor Hendricks", team: "jazz", position: "PF/SF", overall: 73 },
-  { name: "Kenyon Martin Jr.", team: "jazz", position: "PF/SF", overall: 73 },
   { name: "Cody Williams", team: "jazz", position: "SF/PF", overall: 72 },
   { name: "Svi Mykhailiuk", team: "jazz", position: "SG/SF", overall: 72 },
   { name: "Walter Clayton Jr.", team: "jazz", position: "PG", overall: 72, rookie: true },

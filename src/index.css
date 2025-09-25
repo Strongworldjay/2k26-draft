@@ -1,104 +1,148 @@
+/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* App theming */
-:root {
-  --maroon: #7a0808;
-}
+:root { --maroon:#7a0808; }
+*{ box-sizing:border-box; }
+body{ @apply bg-black text-white font-ui; }
 
-* { box-sizing: border-box; }
+.title-emboss{ letter-spacing:.08em; text-shadow:0 2px 0 rgba(255,255,255,.08),0 8px 20px rgba(0,0,0,.85); }
 
-body {
-  @apply bg-black text-white font-ui;
-}
-
-/* Fancy big title */
-.title-emboss {
-  letter-spacing: 0.08em;
-  text-shadow: 0 2px 0 rgba(255,255,255,0.08), 0 8px 20px rgba(0,0,0,0.85);
-}
-
-/* Circle player head */
-.player-dot {
-  @apply rounded-full w-20 h-20 md:w-24 md:h-24 flex items-center justify-center;
-  background: radial-gradient(65% 65% at 30% 30%, #8b0f0f 0%, #5d0707 100%);
-  border: 3px solid rgba(255,255,255,0.06);
-  box-shadow: inset 0 4px 12px rgba(0,0,0,0.5), 0 0 0 2px rgba(0,0,0,0.35);
-  transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
-}
-
-.player-dot:hover {
-  transform: scale(1.05);
-  box-shadow: inset 0 6px 16px rgba(0,0,0,0.65), 0 0 0 2px rgba(255,255,255,0.1);
-}
-
-.player-dot.disabled {
-  filter: grayscale(.9) brightness(.6);
-  opacity: .6;
-  cursor: not-allowed;
-}
-
-.tooltip {
+/* Tooltip */
+.tooltip{
   @apply absolute px-3 py-2 rounded-lg bg-neutral-900/95 border border-white/10 text-sm;
-  white-space: nowrap;
-  transform: translate(-50%, -120%);
-}
-/* === Team Ring Colors (with CSS var for ring) === */
-.cavaliers-bg { --team-color:#7c0c3b; background-color:#7c0c3b; color:whitesmoke; }
-.hawks-bg     { --team-color:#ab112a; background-color:#ab112a; color:black; }
-.celtics-bg   { --team-color:#0a7035; background-color:#0a7035; color:black; }
-.nets-bg      { --team-color:#000000; background-color:#000000; color:#FFFFFF; }
-.hornets-bg   { --team-color:#1D1160; background-color:#1D1160; color:#00788C; }
-.bulls-bg     { --team-color:#CE1141; background-color:#CE1141; color:black; }
-.mavericks-bg { --team-color:#1482cb; background-color:#1482cb; color:#B8C4CA; }
-.nuggets-bg   { --team-color:#0E2240; background-color:#0E2240; color:whitesmoke; }
-.pistons-bg   { --team-color:#8e0d23; background-color:#8e0d23; color:#BEC0C2; }
-.warriors-bg  { --team-color:#1D428A; background-color:#1D428A; color:whitesmoke; }
-.rockets-bg   { --team-color:#0F0708; background-color:#0F0708; color:#C4CED4; }
-.pacers-bg    { --team-color:#FDBB30; background-color:#FDBB30; color:#002D62; }
-.clippers-bg  { --team-color:#1D428A; background-color:#1D428A; color:#BEC0C2; }
-.lakers-bg    { --team-color:#552583; background-color:#552583; color:whitesmoke; }
-.grizzlies-bg { --team-color:#12173F; background-color:#12173F; color:#5D76A9; }
-.heat-bg      { --team-color:#98002E; background-color:#98002E; color:white; }
-.bucks-bg     { --team-color:#00471B; background-color:#00471B; color:#EEE1C6; }
-.timberwolves-bg{--team-color:#0C2340; background-color:#0C2340; color:#9EA2A2; }
-.pelicans-bg  { --team-color:#b48c42; background-color:#b48c42; color:#0C2340; }
-.knicks-bg    { --team-color:#F58426; background-color:#F58426; color:#f0f3f5; }
-.thunder-bg   { --team-color:#3722bb; background-color:#3722bb; color:whitesmoke; }
-.magic-bg     { --team-color:#053f63; background-color:#053f63; color:#C4CED4; }
-.sixers-bg    { --team-color:#002B5C; background-color:#002B5C; color:#C4CED4; }
-.suns-bg      { --team-color:#E56020; background-color:#E56020; color:#1D1160; }
-.trailblazers-bg{--team-color:#E03A3E; background-color:#E03A3E; color:#0F0708; }
-.kings-bg     { --team-color:#5A2D81; background-color:#5A2D81; color:#7f9099; }
-.spurs-bg     { --team-color:#C4CED4; background-color:#C4CED4; color:black; }
-.raptors-bg   { --team-color:#C5050C; background-color:#C5050C; color:black; }
-.jazz-bg      { --team-color:#002B5C; background-color:#002B5C; color:#23d5e9; }
-.wizards-bg   { --team-color:#E31837; background-color:#E31837; color:#002B5C; }
-.freeagent-bg { --team-color:gray;    background-color:gray;     color:black; border-color:gray; }
-
-/* Wrapper that paints the outer ring in team color */
-.player-ring {
-  padding: 4px;
-  border-radius: 9999px;
-  border: 4px solid var(--team-color);
-  display: inline-flex;
+  white-space:nowrap; transform:translate(-50%,-120%);
 }
 
-/* === Overall Tier Glows === */
-.glow { box-shadow: 0 0 0 2px rgba(255,255,255,0.06), inset 0 6px 16px rgba(0,0,0,0.65); }
-.glow-dm  { box-shadow: 0 0 14px 4px rgba(0,0,0,0.9), 0 0 28px 10px rgba(80,0,120,0.8); }   /* Dark Matter */
-.glow-go  { box-shadow: 0 0 18px 8px rgba(135,255,248,0.65); }                               /* Galaxy Opal */
-.glow-pd  { box-shadow: 0 0 18px 8px rgba(255,105,180,0.75); }                               /* Pink Diamond */
-.glow-dia { box-shadow: 0 0 16px 8px rgba(0,180,255,0.7); }                                   /* Diamond */
-.glow-ame { box-shadow: 0 0 16px 8px rgba(140,0,255,0.6); }                                   /* Amethyst */
-.glow-rub { box-shadow: 0 0 14px 6px rgba(200,0,0,0.7); }                                     /* Ruby */
-.glow-sap { box-shadow: 0 0 14px 6px rgba(0,80,255,0.65); }                                   /* Sapphire */
-.glow-em  { box-shadow: 0 0 12px 6px rgba(0,160,60,0.7); }                                    /* Emerald */
-.glow-gld { box-shadow: 0 0 12px 6px rgba(218,165,32,0.8); }                                  /* Gold */
-.glow-sil { box-shadow: 0 0 10px 5px rgba(180,180,180,0.7); }                                 /* Silver */
-.glow-brz { box-shadow: 0 0 10px 5px rgba(166,112,61,0.75); }                                 /* Bronze */
-/* crisp borders on dark bg */
-@media (max-width: 767px) {
-  .shadow-soft { box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset; }
+/* ===== Team Colors (provide --team-color) ===== */
+.cavaliers-bg{--team-color:#7c0c3b;background-color:#7c0c3b;color:whitesmoke;}
+.hawks-bg{--team-color:#ab112a;background-color:#ab112a;color:black;}
+.celtics-bg{--team-color:#0a7035;background-color:#0a7035;color:black;}
+.nets-bg{--team-color:#000000;background-color:#000000;color:#FFFFFF;}
+.hornets-bg{--team-color:#1D1160;background-color:#1D1160;color:#00788C;}
+.bulls-bg{--team-color:#CE1141;background-color:#CE1141;color:black;}
+.mavericks-bg{--team-color:#1482cb;background-color:#1482cb;color:#B8C4CA;}
+.nuggets-bg{--team-color:#0E2240;background-color:#0E2240;color:whitesmoke;}
+.pistons-bg{--team-color:#8e0d23;background-color:#8e0d23;color:#BEC0C2;}
+.warriors-bg{--team-color:#1D428A;background-color:#1D428A;color:whitesmoke;}
+.rockets-bg{--team-color:#0F0708;background-color:#0F0708;color:#C4CED4;}
+.pacers-bg{--team-color:#FDBB30;background-color:#FDBB30;color:#002D62;}
+.clippers-bg{--team-color:#1D428A;background-color:#1D428A;color:#BEC0C2;}
+.lakers-bg{--team-color:#552583;background-color:#552583;color:whitesmoke;}
+.grizzlies-bg{--team-color:#12173F;background-color:#12173F;color:#5D76A9;}
+.heat-bg{--team-color:#98002E;background-color:#98002E;color:white;}
+.bucks-bg{--team-color:#00471B;background-color:#00471B;color:#EEE1C6;}
+.timberwolves-bg{--team-color:#0C2340;background-color:#0C2340;color:#9EA2A2;}
+.pelicans-bg{--team-color:#b48c42;background-color:#b48c42;color:#0C2340;}
+.knicks-bg{--team-color:#F58426;background-color:#F58426;color:#f0f3f5;}
+.thunder-bg{--team-color:#3722bb;background-color:#3722bb;color:whitesmoke;}
+.magic-bg{--team-color:#053f63;background-color:#053f63;color:#C4CED4;}
+.sixers-bg{--team-color:#002B5C;background-color:#002B5C;color:#C4CED4;}
+.suns-bg{--team-color:#E56020;background-color:#E56020;color:#1D1160;}
+.trailblazers-bg{--team-color:#E03A3E;background-color:#E03A3E;color:#0F0708;}
+.kings-bg{--team-color:#5A2D81;background-color:#5A2D81;color:#7f9099;}
+.spurs-bg{--team-color:#C4CED4;background-color:#C4CED4;color:black;}
+.raptors-bg{--team-color:#C5050C;background-color:#C5050C;color:black;}
+.jazz-bg{--team-color:#002B5C;background-color:#002B5C;color:#23d5e9;}
+.wizards-bg{--team-color:#E31837;background-color:#E31837;color:#002B5C;}
+.freeagent-bg{--team-color:gray;background-color:gray;color:black;border-color:gray;}
+
+/* ===== Rarity Ring (outer) + Team Core (inner) ===== */
+
+/* Outer ring is rarity-colored (slightly thinner) */
+.rarity-ring{
+  padding:2.5px;                 /* was 3px */
+  border-radius:9999px;
+  border:2.5px solid var(--rarity); /* was 3px */
+  display:inline-flex;
+}
+
+/* Map tier key -> ring color */
+.ring-common{--rarity:#ffffff;}
+.ring-uncommon{--rarity:#00c850;}
+.ring-rare{--rarity:#0078ff;}
+.ring-very-rare{--rarity:#9600ff;}
+.ring-legendary{--rarity:#daa520;}
+.ring-superstar{--rarity:#ff2828;}
+
+/* Softer ring glows (all platforms) */
+.rarity-ring.glow-common{box-shadow:0 0 8px 4px rgba(255,255,255,.45);}
+.rarity-ring.glow-uncommon{box-shadow:0 0 9px 4px rgba(0,200,80,.6);}
+.rarity-ring.glow-rare{box-shadow:0 0 10px 5px rgba(0,120,255,.6);}
+.rarity-ring.glow-very-rare{box-shadow:0 0 11px 5px rgba(150,0,255,.6);}
+.rarity-ring.glow-legendary{box-shadow:0 0 12px 6px rgba(218,165,32,.75);}
+.rarity-ring.glow-superstar{box-shadow:0 0 13px 6px rgba(255,40,40,.8);}
+
+/* Inner core shows the team color behind the image (no gap) */
+.player-core{
+  padding:0;
+  border-radius:9999px;
+  background:var(--team-color);
+  display:inline-flex;
+  overflow:hidden; /* clip children */
+}
+
+/* ===== Player button (transparent so team color shows) ===== */
+.player-dot{
+  /* slightly smaller circles */
+  @apply rounded-full w-[66px] h-[66px] md:w-[82px] md:h-[82px] flex items-center justify-center;
+  background:transparent;
+  border:0;
+  box-shadow:inset 0 3px 8px rgba(0,0,0,.45);
+  transition:transform .12s ease, box-shadow .2s ease, opacity .2s ease;
+  overflow:hidden; /* clip children */
+}
+.player-dot:hover{ transform:scale(1.045); box-shadow:inset 0 5px 12px rgba(0,0,0,.5); }
+.player-dot.disabled{ filter:grayscale(.9) brightness(.6); opacity:.6; cursor:not-allowed; }
+.player-dot img{ display:block; border-radius:9999px; border:0; }
+
+/* Mobile polish */
+@media (max-width:767px){
+  .rarity-ring.glow-common{box-shadow:0 0 6px 3px rgba(255,255,255,.4);}
+  .rarity-ring.glow-uncommon{box-shadow:0 0 7px 3px rgba(0,200,80,.55);}
+  .rarity-ring.glow-rare{box-shadow:0 0 8px 4px rgba(0,120,255,.55);}
+  .rarity-ring.glow-very-rare{box-shadow:0 0 9px 4px rgba(150,0,255,.55);}
+  .rarity-ring.glow-legendary{box-shadow:0 0 10px 5px rgba(218,165,32,.7);}
+  .rarity-ring.glow-superstar{box-shadow:0 0 11px 5px rgba(255,40,40,.75);}
+}
+/* Arrow styling for active team indicator */
+.arrow {
+  display: inline-block;
+  line-height: 1;
+  font-size: 1.25rem;     /* mobile */
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.5));
+}
+@media (min-width: 768px) {
+  .arrow { font-size: 1.75rem; }  /* desktop */
+}
+/* --- New board fly-in animation --- */
+@keyframes dotFlyIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--fromX, 0), -40vh, 0) scale(.8);
+    filter: blur(2px);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 6px, 0) scale(1.02);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.dot-enter {
+  opacity: 0;
+  animation: dotFlyIn 560ms cubic-bezier(.17,.84,.44,1) forwards;
+  animation-delay: calc(var(--i) * 55ms); /* stagger */
+  will-change: transform, opacity, filter;
+}
+
+/* Respect reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .dot-enter { animation: none; opacity: 1; transform: none; }
 }

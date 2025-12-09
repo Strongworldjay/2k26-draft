@@ -51,7 +51,7 @@ export const ALL_PLAYERS = [
   { name: "Josh Richardson", team: "free agent", position: "PG/SG", overall: 71 },
   { name: "Killian Hayes", team: "free agent", position: "PG/SG", overall: 71 },
 
-    { name: "Trae Young", team: "hawks", position: "PG", overall: 88 },
+  { name: "Trae Young", team: "hawks", position: "PG", overall: 88 },
   { name: "Jalen Johnson", team: "hawks", position: "PF/SF", overall: 87 },
   { name: "Kristaps Porzingis", team: "hawks", position: "C/PF", overall: 86 },
   { name: "Dyson Daniels", team: "hawks", position: "PG/SG", overall: 83 },
@@ -69,8 +69,7 @@ export const ALL_PLAYERS = [
   { name: "Eli N’Diaye", team: "hawks", position: "PF/SF", overall: 68 },
   { name: "Jacob Toppin", team: "hawks", position: "PF/SF", overall: 67 },
 
-  
-   { name: "Jayson Tatum", team: "celtics", position: "PF/SF", overall: 94 },
+  { name: "Jayson Tatum", team: "celtics", position: "PF/SF", overall: 94 },
   { name: "Jaylen Brown", team: "celtics", position: "SF/SG", overall: 92 },
   { name: "Derrick White", team: "celtics", position: "SG/PG", overall: 83 },
   { name: "Payton Pritchard", team: "celtics", position: "PG", overall: 83 },
@@ -125,8 +124,7 @@ export const ALL_PLAYERS = [
   { name: "Antonio Reeves", team: "hornets", position: "SG/SF", overall: 70 },
   { name: "Liam McNeeley", team: "hornets", position: "SF", overall: 70, rookie: true },
 
-
-   { name: "Josh Giddey", team: "bulls", position: "SG/PG", overall: 85 },
+  { name: "Josh Giddey", team: "bulls", position: "SG/PG", overall: 85 },
   { name: "Nikola Vucevic", team: "bulls", position: "C", overall: 84 },
   { name: "Coby White", team: "bulls", position: "PG/SG", overall: 83 },
   { name: "Matas Buzelis", team: "bulls", position: "SF/PF", overall: 80 },
@@ -145,8 +143,7 @@ export const ALL_PLAYERS = [
   { name: "Emanuel Miller", team: "bulls", position: "SF/PF", overall: 68 },
   { name: "Lachlan Olbrich", team: "bulls", position: "PF/C", overall: 68, rookie: true },
 
-
-    { name: "Donovan Mitchell", team: "cavaliers", position: "SG/PG", overall: 94 },
+  { name: "Donovan Mitchell", team: "cavaliers", position: "SG/PG", overall: 94 },
   { name: "Evan Mobley", team: "cavaliers", position: "PF/C", overall: 88 },
   { name: "Darius Garland", team: "cavaliers", position: "PG/SG", overall: 85 },
   { name: "Jarrett Allen", team: "cavaliers", position: "C", overall: 84 },
@@ -164,7 +161,7 @@ export const ALL_PLAYERS = [
   { name: "Chris Livingston", team: "cavaliers", position: "PF/SF", overall: 69 },
   { name: "Luke Travers", team: "cavaliers", position: "SF/PF", overall: 69 },
 
-   { name: "Anthony Davis", team: "mavericks", position: "C/PF", overall: 93 },
+  { name: "Anthony Davis", team: "mavericks", position: "C/PF", overall: 93 },
   { name: "Kyrie Irving", team: "mavericks", position: "SG/PG", overall: 90 },
   { name: "Cooper Flagg", team: "mavericks", position: "SF", overall: 81, rookie: true, rookieAuto: true },
   { name: "P.J. Washington", team: "mavericks", position: "PF/C", overall: 80 },
@@ -183,8 +180,7 @@ export const ALL_PLAYERS = [
   { name: "Moussa Cisse", team: "mavericks", position: "C", overall: 72 },
   { name: "Miles Kelly", team: "mavericks", position: "SG", overall: 68 },
 
-
-    { name: "Nikola Jokic", team: "nuggets", position: "C", overall: 98 },
+  { name: "Nikola Jokic", team: "nuggets", position: "C", overall: 98 },
   { name: "Jamal Murray", team: "nuggets", position: "PG/SG", overall: 88 },
   { name: "Aaron Gordon", team: "nuggets", position: "PF", overall: 84 },
   { name: "Cameron Johnson", team: "nuggets", position: "PF/SF", overall: 80 },
@@ -278,8 +274,7 @@ export const ALL_PLAYERS = [
   { name: "Kam Jones", team: "pacers", position: "SG/PG", overall: 68, rookie: true, rookieAuto: true },
   { name: "Taelon Peter", team: "pacers", position: "SG", overall: 67, rookie: true },
 
-
-    { name: "Kawhi Leonard", team: "clippers", position: "PF/SF", overall: 92 },
+  { name: "Kawhi Leonard", team: "clippers", position: "PF/SF", overall: 92 },
   { name: "James Harden", team: "clippers", position: "PG/SG", overall: 90 },
   { name: "Ivica Zubac", team: "clippers", position: "C", overall: 86 },
   { name: "John Collins", team: "clippers", position: "C/PF", overall: 77 },
@@ -296,7 +291,7 @@ export const ALL_PLAYERS = [
   { name: "Cam Christie", team: "clippers", position: "SG/PG", overall: 70 },
   { name: "Yanic Konan Niederhauser", team: "clippers", position: "C", overall: 69, rookie: true },
 
-   { name: "Luka Doncic", team: "lakers", position: "PG/SG", overall: 97 },
+  { name: "Luka Doncic", team: "lakers", position: "PG/SG", overall: 97 },
   { name: "LeBron James", team: "lakers", position: "PF/PG", overall: 92 },
   { name: "Austin Reaves", team: "lakers", position: "SG/PG", overall: 89 },
   { name: "Deandre Ayton", team: "lakers", position: "C", overall: 83 },
@@ -334,7 +329,7 @@ export const ALL_PLAYERS = [
   { name: "Javon Small", team: "grizzlies", position: "PG", overall: 69, rookie: true },
   { name: "Jahmai Mashack", team: "grizzlies", position: "PG/SG", overall: 68, rookie: true },
 
-   { name: "Bam Adebayo", team: "heat", position: "C", overall: 88 },
+  { name: "Bam Adebayo", team: "heat", position: "C", overall: 88 },
   { name: "Tyler Herro", team: "heat", position: "SG/PG", overall: 87 },
   { name: "Norman Powell", team: "heat", position: "SG/SF", overall: 86 },
   { name: "Kel’el Ware", team: "heat", position: "C/PF", overall: 81 },
@@ -408,7 +403,7 @@ export const ALL_PLAYERS = [
   { name: "Trey Alexander", team: "pelicans", position: "SG/PG", overall: 68 },
   { name: "Hunter Dickinson", team: "pelicans", position: "C", overall: 68 },
 
-   { name: "Jalen Brunson", team: "knicks", position: "PG", overall: 93 },
+  { name: "Jalen Brunson", team: "knicks", position: "PG", overall: 93 },
   { name: "Karl-Anthony Towns", team: "knicks", position: "PF/C", overall: 90 },
   { name: "Mikal Bridges", team: "knicks", position: "SF/SG", overall: 86 },
   { name: "OG Anunoby", team: "knicks", position: "SF/PF", overall: 85 },
@@ -426,7 +421,7 @@ export const ALL_PLAYERS = [
   { name: "Kevin McCullar Jr.", team: "knicks", position: "SG/SF", overall: 69 },
   { name: "Mohamed Diawara", team: "knicks", position: "PF/SF", overall: 68, rookie: true, rookieAuto: true },
 
-    { name: "Shai Gilgeous-Alexander", team: "thunder", position: "PG/SG", overall: 98 },
+  { name: "Shai Gilgeous-Alexander", team: "thunder", position: "PG/SG", overall: 98 },
   { name: "Jalen Williams", team: "thunder", position: "PF/SF", overall: 90 },
   { name: "Chet Holmgren", team: "thunder", position: "C/PF", overall: 88 },
   { name: "Isaiah Hartenstein", team: "thunder", position: "C", overall: 83 },
@@ -445,8 +440,7 @@ export const ALL_PLAYERS = [
   { name: "Brooks Barnhizer", team: "thunder", position: "SG/SF", overall: 69, rookie: true },
   { name: "Chris Youngblood", team: "thunder", position: "SG/SF", overall: 68 },
 
-
-   { name: "Paolo Banchero", team: "magic", position: "PF/SF", overall: 89 },
+  { name: "Paolo Banchero", team: "magic", position: "PF/SF", overall: 89 },
   { name: "Franz Wagner", team: "magic", position: "SF/SG", overall: 87 },
   { name: "Desmond Bane", team: "magic", position: "SG/SF", overall: 84 },
   { name: "Jalen Suggs", team: "magic", position: "PG/SG", overall: 83 },
@@ -464,7 +458,7 @@ export const ALL_PLAYERS = [
   { name: "Colin Castleton", team: "magic", position: "C", overall: 70 },
   { name: "Jase Richardson", team: "magic", position: "PG/SG", overall: 70, rookie: true },
 
-   { name: "Tyrese Maxey", team: "76ers", position: "PG/SG", overall: 92 },
+  { name: "Tyrese Maxey", team: "76ers", position: "PG/SG", overall: 92 },
   { name: "Joel Embiid", team: "76ers", position: "C", overall: 90 },
   { name: "Paul George", team: "76ers", position: "SF/PF", overall: 81 },
   { name: "Kelly Oubre Jr.", team: "76ers", position: "SF/SG", overall: 80 },
@@ -482,8 +476,7 @@ export const ALL_PLAYERS = [
   { name: "Johni Broome", team: "76ers", position: "PF/C", overall: 70, rookie: true },
   { name: "Hunter Sallis", team: "76ers", position: "SG", overall: 68 },
 
-
-    { name: "Devin Booker", team: "suns", position: "PG/SG", overall: 93 },
+  { name: "Devin Booker", team: "suns", position: "PG/SG", overall: 93 },
   { name: "Jalen Green", team: "suns", position: "SG/PG", overall: 83 },
   { name: "Grayson Allen", team: "suns", position: "SF/SG", overall: 82 },
   { name: "Mark Williams", team: "suns", position: "C", overall: 82 },
@@ -539,7 +532,7 @@ export const ALL_PLAYERS = [
   { name: "Isaiah Stevens", team: "kings", position: "PG/SG", overall: 68 },
   { name: "Dylan Cardwell", team: "kings", position: "C", overall: 68 },
 
-    { name: "Victor Wembanyama", team: "spurs", position: "C/PF", overall: 95 },
+  { name: "Victor Wembanyama", team: "spurs", position: "C/PF", overall: 95 },
   { name: "De’Aaron Fox", team: "spurs", position: "PG", overall: 87 },
   { name: "Stephon Castle", team: "spurs", position: "SG/PG", overall: 84 },
   { name: "Devin Vassell", team: "spurs", position: "SG/SF", overall: 82 },
@@ -576,7 +569,7 @@ export const ALL_PLAYERS = [
   { name: "Alijah Martin", team: "raptors", position: "SG/PG", overall: 69, rookie: true },
   { name: "Chucky Hepburn", team: "raptors", position: "PG", overall: 68 },
 
-   { name: "Lauri Markkanen", team: "jazz", position: "SF/PF", overall: 87 },
+  { name: "Lauri Markkanen", team: "jazz", position: "SF/PF", overall: 87 },
   { name: "Walker Kessler", team: "jazz", position: "C", overall: 83 },
   { name: "Keyonte George", team: "jazz", position: "PG/SG", overall: 83 },
   { name: "Ace Bailey", team: "jazz", position: "SF/SG", overall: 78, rookie: true, rookieAuto: true },

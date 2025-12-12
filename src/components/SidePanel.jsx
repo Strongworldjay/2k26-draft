@@ -9,6 +9,24 @@ function abbr(pick) {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
+// Parse first listed position token and map to G/F/C bucket
+function bucketFromFirstPos(pos = '') {
+  // Normalize, keep only letters, split on anything non-letters
+  const tokens = pos
+    .toUpperCase()
+    .replace(/[^A-Z]/g, ' ')
+    .split(' ')
+    .filter(Boolean);
+
+  // Find the first valid basketball position token in order
+  for (const t of tokens) {
+    if (t === 'PG' || t === 'SG') return 'G';   // Guard
+    if (t === 'SF' || t === 'PF') return 'F';   // Forward
+    if (t === 'C') return 'C';                  // Center
+  }
+  return null;
+}
+
 export default function SidePanel({
   franchise,
   team,
@@ -20,6 +38,7 @@ export default function SidePanel({
   const title = titleDesktop ?? TEAM_NAME[franchise] ?? 'Team';
   const short = titleMobile ?? (TEAM_ABBR[franchise] ?? '#');
 
+  // 12 drafted + slot 13 = rookie
   const slots = Array.from({ length: 13 }).map((_, i) => (i < 12 ? team[i] ?? null : (rookie ?? null)));
 
   const draftedPlusRookie = [...team, ...(rookie ? [rookie] : [])].filter(Boolean);
@@ -27,8 +46,17 @@ export default function SidePanel({
     ? (draftedPlusRookie.reduce((s, p) => s + (p.overall || 0), 0) / draftedPlusRookie.length).toFixed(1)
     : '—';
 
+  // Count G/F/C from first listed position only
+  let gCount = 0, fCount = 0, cCount = 0;
+  for (const p of draftedPlusRookie) {
+    const b = bucketFromFirstPos(p.position || '');
+    if (b === 'G') gCount++;
+    else if (b === 'F') fCount++;
+    else if (b === 'C') cCount++;
+  }
+
   const panelStyle = isActive ? { '--franchise-color': TEAM_COLOR[franchise] } : undefined;
-  const headerStyle = { color: TEAM_COLOR[franchise] }; // <-- color the team name
+  const headerStyle = { color: TEAM_COLOR[franchise] }; // team-colored title
 
   return (
     <aside
@@ -89,10 +117,20 @@ export default function SidePanel({
         })}
       </ol>
 
-      {/* Footer: Average overall */}
-      <div className="mt-3 md:mt-4 pt-2 border-t border-white/10 flex items-center justify-between text-sm md:text-base">
-        <span className="opacity-80">Avg OVR</span>
-        <span className="font-semibold">{avgOVR}</span>
+      {/* Footer: Average overall + Position mix */}
+      <div className="mt-3 md:mt-4 pt-2 border-t border-white/10 text-sm md:text-base">
+        <div className="flex items-center justify-between">
+          <span className="opacity-80">Avg OVR</span>
+          <span className="font-semibold">{avgOVR}</span>
+        </div>
+
+        {/* Position counts (show only non-zero buckets) */}
+        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 opacity-90">
+          {gCount > 0 && <span>{gCount}x Guards</span>}
+          {fCount > 0 && <span>{fCount}x Forwards</span>}
+          {cCount > 0 && <span>{cCount}x Centers</span>}
+          {(gCount + fCount + cCount === 0) && <span className="opacity-70">—</span>}
+        </div>
       </div>
     </aside>
   );

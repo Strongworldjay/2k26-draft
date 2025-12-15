@@ -11,23 +11,22 @@ function abbr(pick) {
 
 // Parse first listed position token and map to G/F/C bucket
 function bucketFromFirstPos(pos = '') {
-  // Normalize, keep only letters, split on anything non-letters
   const tokens = pos
     .toUpperCase()
     .replace(/[^A-Z]/g, ' ')
     .split(' ')
     .filter(Boolean);
 
-  // Find the first valid basketball position token in order
   for (const t of tokens) {
-    if (t === 'PG' || t === 'SG') return 'G';   // Guard
-    if (t === 'SF' || t === 'PF') return 'F';   // Forward
-    if (t === 'C') return 'C';                  // Center
+    if (t === 'PG' || t === 'SG') return 'G';
+    if (t === 'SF' || t === 'PF') return 'F';
+    if (t === 'C') return 'C';
   }
   return null;
 }
 
 export default function SidePanel({
+  side,                // "left" | "right" (optional)
   franchise,
   team,
   rookie,
@@ -56,11 +55,20 @@ export default function SidePanel({
   }
 
   const panelStyle = isActive ? { '--franchise-color': TEAM_COLOR[franchise] } : undefined;
-  const headerStyle = { color: TEAM_COLOR[franchise] }; // team-colored title
+  const headerStyle = { color: TEAM_COLOR[franchise] };
+
+  // Outward nudge on desktop
+  const shiftClass =
+    side === 'left'
+      ? 'md:-translate-x-8 lg:-translate-x-12 xl:-translate-x-20'
+      : side === 'right'
+      ? 'md:-translate-x-8 lg:-translate-x-12 xl:-translate-x-20'
+      : '';
 
   return (
     <aside
-      className={`panel rounded-xl p-3 md:p-6 bg-[var(--maroon)]/90 flex flex-col ${isActive ? 'panel-active' : ''}`}
+      className={`panel rounded-xl p-3 md:p-6 bg-[var(--maroon)]/90 flex flex-col
+        ${isActive ? 'panel-active' : ''} ${shiftClass} transition-transform duration-200`}
       style={panelStyle}
     >
       {/* Mobile header */}
@@ -117,14 +125,13 @@ export default function SidePanel({
         })}
       </ol>
 
-      {/* Footer: Average overall + Position mix */}
+      {/* Footer: Avg OVR + Position mix */}
       <div className="mt-3 md:mt-4 pt-2 border-t border-white/10 text-sm md:text-base">
         <div className="flex items-center justify-between">
           <span className="opacity-80">Avg OVR</span>
           <span className="font-semibold">{avgOVR}</span>
         </div>
 
-        {/* Position counts (show only non-zero buckets) */}
         <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 opacity-90">
           {gCount > 0 && <span>{gCount}x Guards</span>}
           {fCount > 0 && <span>{fCount}x Forwards</span>}

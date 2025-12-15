@@ -3,16 +3,16 @@ import { ALL_PLAYERS } from "./players.js";
 import { tierFromOverall } from "./tiers.js";
 
 /** ----- Config ----- */
-const BOARD_SIZE = 36;
-const MIN_CENTERS = 4;
+const BOARD_SIZE = 42;
+const MIN_CENTERS = 0;
 
 /** Rarity weights (must match tier keys from tiers.js) */
 const RARITY_WEIGHTS = {
-  "common": 0.19,       // 60–74
-  "uncommon": 0.42,     // 75–79
+  "common": 0.05,       // 60–74
+  "uncommon": 0.50,     // 75–79
   "rare": 0.25,         // 80–85
-  "very-rare": 0.10,    // 86–89
-  "legendary": 0.03,    // 90–94
+  "very-rare": 0.15,    // 86–89
+  "legendary": 0.04,    // 90–94
   "superstar": 0.01,    // 95+
 };
 

@@ -21,7 +21,7 @@ body{ @apply bg-black text-white font-ui; }
 .hawks-bg{--team-color:#ab112a;background-color:#ab112a;color:black;}
 .celtics-bg{--team-color:#0a7035;background-color:#0a7035;color:black;}
 .nets-bg{--team-color:#25282A;background-color:#25282A;color:#FFFFFF;}
-.hornets-bg{--team-color:#00788c;background-color:#00788c;color:#00788C;}
+.hornets-bg{--team-color:#00788c;background-color:#00788c;color:white;}
 .bulls-bg{--team-color:#CE1141;background-color:#CE1141;color:black;}
 .mavericks-bg{--team-color:#1482cb;background-color:#1482cb;color:#B8C4CA;}
 .nuggets-bg{--team-color:#0E2240;background-color:#0E2240;color:whitesmoke;}
@@ -114,6 +114,44 @@ body{ @apply bg-black text-white font-ui; }
   .rarity-ring.glow-legendary{box-shadow:0 0 10px 5px rgba(218,165,32,.7);}
   .rarity-ring.glow-superstar{box-shadow:0 0 11px 5px rgba(255,40,40,.75);}
 }
+/* ==== Legend (special) rainbow ring ==== */
+/* Uses a pseudo-element to draw a conic-gradient ring so it looks crisp */
+.rarity-ring.ring-legend {
+  position: relative;
+  border-color: transparent;      /* we draw the ring with ::before */
+}
+
+.rarity-ring.ring-legend::before {
+  content: "";
+  position: absolute;
+  inset: -2.5px;                  /* match your ring border thickness */
+  padding: 2.5px;                 /* same thickness to create the band */
+  border-radius: inherit;
+  background: conic-gradient(
+    #ff0040, #ffa500, #ffee00, #00d664, #00b2ff, #7a00ff, #ff00c8, #ff0040
+  );
+  /* Punch out the center so only the ring shows */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Optional animated “alive” glow for legends */
+@keyframes legendHue {
+  to { filter: hue-rotate(360deg); }
+}
+
+.rarity-ring.glow-legend {
+  /* gentle white outer halo + subtle rotation of hues */
+  box-shadow: 0 0 16px 6px rgba(255,255,255,.35);
+  animation: legendHue 6s linear infinite;
+}
+
+/* Respect taken state: your existing .rarity-ring.taken rule already removes glow.
+   It also works for legend—no extra changes needed. */
 
 /* Arrow styling for active team indicator */
 .arrow {

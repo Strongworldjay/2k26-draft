@@ -6,8 +6,8 @@
 /* App theming */
 :root{
   --maroon:#7a0808;
-  --paper:#f4ecdc;
-  --panel:#efe4cb;
+  --paper:#000000;
+  --panel:#bcb299;
 }
 
 html, body, #root{

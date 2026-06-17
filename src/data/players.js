@@ -4,7 +4,6 @@
 export const ALL_PLAYERS = [
   { name: "Malik Beasley", team: "freeagent", position: "SG/SF", overall: 78 },
   { name: "Ben Simmons", team: "freeagent", position: "PG/C", overall: 77 },
-  { name: "Malcolm Brogdon", team: "freeagent", position: "PG/SG", overall: 77 },
   { name: "Spencer Dinwiddie", team: "freeagent", position: "PG/SG", overall: 76 },
   { name: "Torrey Craig", team: "freeagent", position: "PF/SF", overall: 74 },
   { name: "DaQuan Jeffries", team: "freeagent", position: "SF/SG", overall: 74 },
@@ -295,7 +294,7 @@ export const ALL_PLAYERS = [
   { name: "Sean Pedulla", team: "clippers", position: "PG", overall: 68 },
   { name: "Kobe Bryant", team: "lakers", position: "SG/SF", overall: 99, legend: true },
   { name: "Magic Johnson", team: "lakers", position: "PG/SG", overall: 99, legend: true },
-  { name: "Shaquille O’Neal", team: "lakers", position: "C/PF", overall: 98, legend: true },
+  { name: "Shaq", team: "lakers", position: "C/PF", overall: 98, legend: true },
   { name: "Luka Doncic", team: "lakers", position: "PG/SG", overall: 97 },
   { name: "LeBron James", team: "lakers", position: "PF/SF", overall: 92 },
   { name: "Austin Reaves", team: "lakers", position: "SG/SF", overall: 87 },

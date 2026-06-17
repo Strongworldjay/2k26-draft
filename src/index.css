@@ -3,11 +3,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* App theming */
+/* App theming - Subtle Elegance palette */
 :root{
-  --maroon:#7a0808;
-  --paper:#000000;
-  --panel:#bcb299;
+  --black:#020403;
+  --brown:#5f2e1b;
+  --deep-green:#1a2324;
+  --soft-black:#141413;
+  --paper:#1a2324;
+  --panel:#141413;
+  --panel-alt:#020403;
+  --accent:#5f2e1b;
 }
 
 html, body, #root{
@@ -19,19 +24,27 @@ html, body, #root{
 }
 
 body{
-  @apply bg-[#f4ecdc] text-black font-ui;
+  @apply font-ui;
+  background:
+    radial-gradient(circle at 50% 15%, rgba(95,46,27,.28), transparent 34%),
+    radial-gradient(circle at 20% 80%, rgba(26,35,36,.65), transparent 35%),
+    linear-gradient(135deg, #020403 0%, #141413 48%, #1a2324 100%);
+  color:#f4efe7;
   overflow:hidden;
 }
 
 .title-emboss{
   letter-spacing:.08em;
-  text-shadow:0 2px 0 rgba(255,255,255,.08),0 8px 20px rgba(0,0,0,.12);
+  color:#f4efe7;
+  text-shadow:0 2px 0 rgba(255,255,255,.08),0 8px 20px rgba(0,0,0,.85);
 }
 
 /* Tooltip */
 .tooltip{
-  @apply absolute px-3 py-2 rounded-lg bg-[#efe4cb] border text-sm text-black shadow-lg;
-  border-color: rgba(0,0,0,.14);
+  @apply absolute px-3 py-2 rounded-lg border text-sm shadow-lg;
+  background:#141413;
+  color:#f4efe7;
+  border-color:rgba(244,239,231,.16);
   white-space:nowrap;
   transform:translate(-50%,-120%);
 }
@@ -78,24 +91,24 @@ body{
 }
 
 /* Map tier key -> ring color */
-.ring-common{--rarity:#ffffff;}
+.ring-common{--rarity:#f4efe7;}
 .ring-uncommon{--rarity:#00c850;}
 .ring-rare{--rarity:#0078ff;}
 .ring-very-rare{--rarity:#9600ff;}
-.ring-legendary{--rarity:#daa520;}
+.ring-legendary{--rarity:#c89232;}
 .ring-superstar{--rarity:#ff2828;}
 
 /* Softer ring glows */
-.rarity-ring.glow-common{box-shadow:0 0 8px 4px rgba(255,255,255,.45);}
-.rarity-ring.glow-uncommon{box-shadow:0 0 9px 4px rgba(0,200,80,.6);}
-.rarity-ring.glow-rare{box-shadow:0 0 10px 5px rgba(0,120,255,.6);}
-.rarity-ring.glow-very-rare{box-shadow:0 0 11px 5px rgba(150,0,255,.6);}
-.rarity-ring.glow-legendary{box-shadow:0 0 12px 6px rgba(218,165,32,.75);}
-.rarity-ring.glow-superstar{box-shadow:0 0 13px 6px rgba(255,40,40,.8);}
+.rarity-ring.glow-common{box-shadow:0 0 8px 4px rgba(244,239,231,.36);}
+.rarity-ring.glow-uncommon{box-shadow:0 0 9px 4px rgba(0,200,80,.56);}
+.rarity-ring.glow-rare{box-shadow:0 0 10px 5px rgba(0,120,255,.56);}
+.rarity-ring.glow-very-rare{box-shadow:0 0 11px 5px rgba(150,0,255,.56);}
+.rarity-ring.glow-legendary{box-shadow:0 0 12px 6px rgba(200,146,50,.72);}
+.rarity-ring.glow-superstar{box-shadow:0 0 13px 6px rgba(255,40,40,.76);}
 
 /* Taken state */
 .rarity-ring.taken{
-  --rarity:#8a8a8a;
+  --rarity:#5d625e;
   box-shadow:none !important;
   opacity:.95;
 }
@@ -108,21 +121,21 @@ body{
   overflow:hidden;
 }
 
-/* Slightly smaller circles so the whole page fits better */
+/* Character dots are 1px bigger than last version */
 .player-dot{
-  @apply rounded-full w-[60px] h-[60px] md:w-[74px] md:h-[74px] flex items-center justify-center;
+  @apply rounded-full w-[61px] h-[61px] md:w-[75px] md:h-[75px] flex items-center justify-center;
   background:transparent;
   border:0;
-  box-shadow:inset 0 3px 8px rgba(0,0,0,.45);
+  box-shadow:inset 0 3px 8px rgba(0,0,0,.48);
   transition:transform .12s ease, box-shadow .2s ease, opacity .2s ease;
   overflow:hidden;
 }
 .player-dot:hover{
   transform:scale(1.04);
-  box-shadow:inset 0 5px 12px rgba(0,0,0,.5);
+  box-shadow:inset 0 5px 12px rgba(0,0,0,.55);
 }
 .player-dot.disabled{
-  filter:grayscale(.9) brightness(.75);
+  filter:grayscale(.9) brightness(.72);
   opacity:.62;
   cursor:not-allowed;
 }
@@ -134,12 +147,12 @@ body{
 
 /* Mobile polish */
 @media (max-width:767px){
-  .rarity-ring.glow-common{box-shadow:0 0 6px 3px rgba(255,255,255,.4);}
-  .rarity-ring.glow-uncommon{box-shadow:0 0 7px 3px rgba(0,200,80,.55);}
-  .rarity-ring.glow-rare{box-shadow:0 0 8px 4px rgba(0,120,255,.55);}
-  .rarity-ring.glow-very-rare{box-shadow:0 0 9px 4px rgba(150,0,255,.55);}
-  .rarity-ring.glow-legendary{box-shadow:0 0 10px 5px rgba(218,165,32,.7);}
-  .rarity-ring.glow-superstar{box-shadow:0 0 11px 5px rgba(255,40,40,.75);}
+  .rarity-ring.glow-common{box-shadow:0 0 6px 3px rgba(244,239,231,.34);}
+  .rarity-ring.glow-uncommon{box-shadow:0 0 7px 3px rgba(0,200,80,.52);}
+  .rarity-ring.glow-rare{box-shadow:0 0 8px 4px rgba(0,120,255,.52);}
+  .rarity-ring.glow-very-rare{box-shadow:0 0 9px 4px rgba(150,0,255,.52);}
+  .rarity-ring.glow-legendary{box-shadow:0 0 10px 5px rgba(200,146,50,.68);}
+  .rarity-ring.glow-superstar{box-shadow:0 0 11px 5px rgba(255,40,40,.72);}
 }
 
 /* Legend rainbow ring */
@@ -168,7 +181,7 @@ body{
   to { filter: hue-rotate(360deg); }
 }
 .rarity-ring.glow-legend {
-  box-shadow: 0 0 16px 6px rgba(255,255,255,.35);
+  box-shadow: 0 0 16px 6px rgba(244,239,231,.25);
   animation: legendHue 6s linear infinite;
 }
 
@@ -177,7 +190,7 @@ body{
   display: inline-block;
   line-height: 1;
   font-size: 1.1rem;
-  filter: drop-shadow(0 1px 1px rgba(0,0,0,.15));
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,.55));
 }
 @media (min-width: 768px) {
   .arrow { font-size: 1.45rem; }
@@ -212,10 +225,44 @@ body{
 
 /* Panel frame + active glow */
 .panel {
-  border: 1px solid rgba(0,0,0,0.12);
+  border: 1px solid rgba(244,239,231,.13);
+  background:#141413 !important;
+  color:#f4efe7 !important;
 }
 .panel-active {
   box-shadow:
     0 0 0 2px var(--franchise-color),
     0 0 22px 6px color-mix(in srgb, var(--franchise-color) 60%, transparent);
+}
+
+/* Palette overrides for Tailwind classes used by the current JSX */
+.bg-\[\#f4ecdc\]{
+  background:
+    radial-gradient(circle at 50% 15%, rgba(95,46,27,.28), transparent 34%),
+    radial-gradient(circle at 20% 80%, rgba(26,35,36,.65), transparent 35%),
+    linear-gradient(135deg, #020403 0%, #141413 48%, #1a2324 100%) !important;
+}
+.bg-\[\#efe4cb\]{
+  background:#141413 !important;
+  color:#f4efe7 !important;
+}
+.bg-\[\#e1c67d\]{
+  background:#5f2e1b !important;
+  color:#f4efe7 !important;
+}
+.bg-\[\#f3e8d2\]{
+  background:#141413 !important;
+  color:#f4efe7 !important;
+}
+.text-black{
+  color:#f4efe7 !important;
+}
+.border-black\/10,
+.border-black\/12,
+.border-black\/20,
+.border-black\/25{
+  border-color:rgba(244,239,231,.14) !important;
+}
+.bg-black\/5{
+  background:rgba(244,239,231,.05) !important;
 }

@@ -1,5 +1,5 @@
 // src/App.jsx
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import DraftBoard from './components/DraftBoard.jsx';
 import SidePanel from './components/SidePanel.jsx';
 import Modal from './components/Modal.jsx';
@@ -9,7 +9,8 @@ import { TEAM_NAME, TEAM_ABBR, randomFranchise } from './data/teams.js';
 
 const BOARD_SIZE = 36;
 const DRAFT_PICKS_PER_TEAM = 12;
-const TEAM_STORAGE_KEY = '2k26-draft-saved-franchises';
+const BOARD_STORAGE_KEY = '2k26-draft-board-state-v2';
+const OLD_TEAM_STORAGE_KEY = '2k26-draft-saved-franchises';
 
 function randomStartingTeam() {
   return Math.random() < 0.5 ? 1 : 2;
@@ -21,15 +22,21 @@ function makeRandomMatchup() {
   return { franchise1, franchise2 };
 }
 
+function isValidMatchup(matchup) {
+  return !!(
+    matchup?.franchise1 &&
+    matchup?.franchise2 &&
+    matchup.franchise1 !== matchup.franchise2
+  );
+}
+
 function readSavedMatchup() {
   try {
-    const raw = localStorage.getItem(TEAM_STORAGE_KEY);
+    const raw = localStorage.getItem(OLD_TEAM_STORAGE_KEY);
     if (!raw) return null;
 
     const saved = JSON.parse(raw);
-    if (!saved?.franchise1 || !saved?.franchise2 || saved.franchise1 === saved.franchise2) {
-      return null;
-    }
+    if (!isValidMatchup(saved)) return null;
 
     return {
       franchise1: saved.franchise1,
@@ -40,9 +47,47 @@ function readSavedMatchup() {
   }
 }
 
-function saveMatchup(franchise1, franchise2) {
+function makeFreshBoardState(matchup = null) {
+  const nextMatchup = isValidMatchup(matchup) ? matchup : makeRandomMatchup();
+
+  return {
+    players: generatePlayers(BOARD_SIZE),
+    team1: [],
+    team2: [],
+    draftHistory: [],
+    activeTeam: randomStartingTeam(),
+    matchup: nextMatchup,
+    boardVersion: Date.now(),
+  };
+}
+
+function readSavedBoardState() {
   try {
-    localStorage.setItem(TEAM_STORAGE_KEY, JSON.stringify({ franchise1, franchise2 }));
+    const raw = localStorage.getItem(BOARD_STORAGE_KEY);
+    if (!raw) return null;
+
+    const saved = JSON.parse(raw);
+    if (!isValidMatchup(saved?.matchup)) return null;
+    if (!Array.isArray(saved.players) || saved.players.length === 0) return null;
+
+    return {
+      players: saved.players,
+      team1: Array.isArray(saved.team1) ? saved.team1 : [],
+      team2: Array.isArray(saved.team2) ? saved.team2 : [],
+      draftHistory: Array.isArray(saved.draftHistory) ? saved.draftHistory : [],
+      activeTeam: saved.activeTeam === 2 ? 2 : 1,
+      matchup: saved.matchup,
+      boardVersion: Number(saved.boardVersion) || 0,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function saveBoardState(boardState) {
+  try {
+    localStorage.setItem(BOARD_STORAGE_KEY, JSON.stringify(boardState));
+    localStorage.setItem(OLD_TEAM_STORAGE_KEY, JSON.stringify(boardState.matchup));
   } catch {
     // localStorage can fail in private windows or restricted browsers.
   }
@@ -58,24 +103,32 @@ function rookieFor(franchise) {
 }
 
 export default function App() {
-  const [players, setPlayers] = useState(() => generatePlayers(BOARD_SIZE));
-  const [team1, setTeam1] = useState([]);
-  const [team2, setTeam2] = useState([]);
-  const [draftHistory, setDraftHistory] = useState([]);
-  const [activeTeam, setActiveTeam] = useState(() => randomStartingTeam());
+  const [initialBoard] = useState(() => (
+    readSavedBoardState() ?? makeFreshBoardState(readSavedMatchup())
+  ));
+
+  const [players, setPlayers] = useState(initialBoard.players);
+  const [team1, setTeam1] = useState(initialBoard.team1);
+  const [team2, setTeam2] = useState(initialBoard.team2);
+  const [draftHistory, setDraftHistory] = useState(initialBoard.draftHistory);
+  const [activeTeam, setActiveTeam] = useState(initialBoard.activeTeam);
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [boardVersion, setBoardVersion] = useState(0);
-
-  const [matchup, setMatchup] = useState(() => {
-    const saved = readSavedMatchup();
-    if (saved) return saved;
-
-    const generated = makeRandomMatchup();
-    saveMatchup(generated.franchise1, generated.franchise2);
-    return generated;
-  });
+  const [boardVersion, setBoardVersion] = useState(initialBoard.boardVersion);
+  const [matchup, setMatchup] = useState(initialBoard.matchup);
 
   const { franchise1, franchise2 } = matchup;
+
+  useEffect(() => {
+    saveBoardState({
+      players,
+      team1,
+      team2,
+      draftHistory,
+      activeTeam,
+      matchup,
+      boardVersion,
+    });
+  }, [players, team1, team2, draftHistory, activeTeam, matchup, boardVersion]);
 
   const rookie1 = rookieFor(franchise1);
   const rookie2 = rookieFor(franchise2);
@@ -130,16 +183,16 @@ export default function App() {
   };
 
   const resetBoard = () => {
-    const nextMatchup = makeRandomMatchup();
-    saveMatchup(nextMatchup.franchise1, nextMatchup.franchise2);
+    const nextState = makeFreshBoardState();
+    saveBoardState(nextState);
 
-    setMatchup(nextMatchup);
-    setPlayers(generatePlayers(BOARD_SIZE));
-    setTeam1([]);
-    setTeam2([]);
-    setDraftHistory([]);
-    setActiveTeam(randomStartingTeam());
-    setBoardVersion((version) => version + 1);
+    setMatchup(nextState.matchup);
+    setPlayers(nextState.players);
+    setTeam1(nextState.team1);
+    setTeam2(nextState.team2);
+    setDraftHistory(nextState.draftHistory);
+    setActiveTeam(nextState.activeTeam);
+    setBoardVersion(nextState.boardVersion);
   };
 
   return (

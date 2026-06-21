@@ -31,6 +31,41 @@ export const TEAM_NAME = {
   raptors: 'Toronto Raptors', jazz: 'Utah Jazz', wizards: 'Washington Wizards', freeagent: 'Free Agents',
 };
 
+
+export const TEAM_SORT_NAME = {
+  hawks: 'Hawks',
+  celtics: 'Celtics',
+  nets: 'Nets',
+  hornets: 'Hornets',
+  bulls: 'Bulls',
+  cavaliers: 'Cavaliers',
+  mavericks: 'Mavericks',
+  nuggets: 'Nuggets',
+  pistons: 'Pistons',
+  warriors: 'Warriors',
+  rockets: 'Rockets',
+  pacers: 'Pacers',
+  clippers: 'Clippers',
+  lakers: 'Lakers',
+  grizzlies: 'Grizzlies',
+  heat: 'Heat',
+  bucks: 'Bucks',
+  timberwolves: 'Timberwolves',
+  pelicans: 'Pelicans',
+  knicks: 'Knicks',
+  thunder: 'Thunder',
+  magic: 'Magic',
+  sixers: '76ers',
+  suns: 'Suns',
+  trailblazers: 'Trail Blazers',
+  kings: 'Kings',
+  spurs: 'Spurs',
+  raptors: 'Raptors',
+  jazz: 'Jazz',
+  wizards: 'Wizards',
+  freeagent: 'Free Agents',
+};
+
 export const FRANCHISE_SLUGS = TEAM_ORDER.filter((slug) => slug !== 'freeagent');
 
 export function randomFranchise(exclude = []) {
@@ -42,11 +77,11 @@ export function randomFranchise(exclude = []) {
 
 /** Primary team colors (match the CSS --team-color values). */
 export const TEAM_COLOR = {
-  hawks: '#ab112a', celtics: '#0a7035', nets: '#25282A', hornets: '#00788c', bulls: '#CE1141',
-  cavaliers: '#7c0c3b', mavericks: '#1482cb', nuggets: '#0E2240', pistons: '#8e0d23', warriors: '#FFC72C',
-  rockets: '#CE1141', pacers: '#FDBB30', clippers: '#1D428A', lakers: '#552583', grizzlies: '#12173F',
-  heat: '#98002E', bucks: '#00471B', timberwolves: '#0C2340', pelicans: '#b48c42', knicks: '#F58426',
-  thunder: '#3722bb', magic: '#0077c0', sixers: '#002B5C', suns: '#E56020', trailblazers: '#E03A3E',
+  hawks: '#ab112a', celtics: '#0a7035', nets: '#909090', hornets: '#00788c', bulls: '#CE1141',
+  cavaliers: '#860038', mavericks: '#1482cb', nuggets: '#fec524', pistons: '#8e0d23', warriors: '#FFC72C',
+  rockets: '#CE1141', pacers: '#FDBB30', clippers: '#4891CE', lakers: '#552583', grizzlies: '#6189B9',
+  heat: '#98002E', bucks: '#EEE1C6', timberwolves: '#78BE20', pelicans: '#b48c42', knicks: '#F58426',
+  thunder: '#007AC1', magic: '#0077c0', sixers: '#006BB6 ', suns: '#E56020', trailblazers: '#E03A3E',
   kings: '#5A2D81', spurs: '#C4CED4', raptors: '#C5050C', jazz: '#7A3A9A', wizards: '#E31837',
   freeagent: 'gray',
 };

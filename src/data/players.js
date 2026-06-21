@@ -212,7 +212,7 @@ export const ALL_PLAYERS = [
   { name: "Kevin Huerter", team: "pistons", position: "SG/SF", overall: 77 },
   { name: "Marcus Sasser", team: "pistons", position: "PG/SG", overall: 76 },
   { name: "Isaac Jones", team: "pistons", position: "PF/C", overall: 71 },
-  { name: "Wendell Moore Jr.", team: "pistons", position: "SF/SG", overall: 70 },
+  { name: "Wendell Moore", team: "pistons", position: "SF/SG", overall: 70 },
   { name: "Chaz Lanier", team: "pistons", position: "SG/SF", overall: 68, rookie: true, rookieAuto: true },
   { name: "Tolu Smith", team: "pistons", position: "C/PF", overall: 67 },
   { name: "Stephen Curry", team: "warriors", position: "PG/SG", overall: 95 },

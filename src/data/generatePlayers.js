@@ -7,10 +7,10 @@ const MIN_CENTERS = 0;
 
 /** Rarity weights. These keys must match tiers.js. */
 const RARITY_WEIGHTS = {
-  common: 0.05,
-  uncommon: 0.35,
-  rare: 0.30,
-  'very-rare': 0.23,
+  common: 0.01,
+  uncommon: 0.40,
+  rare: 0.35,
+  'very-rare': 0.17,
   legendary: 0.05,
   superstar: 0.02,
 };

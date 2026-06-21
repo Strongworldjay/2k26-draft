@@ -1,6 +1,6 @@
 // src/components/SidePanel.jsx
 import React from 'react';
-import { TEAM_ABBR, TEAM_NAME, TEAM_COLOR } from '../data/teams.js';
+import { TEAM_ABBR, TEAM_NAME, TEAM_COLOR, TEAM_SORT_NAME } from '../data/teams.js';
 
 const TEAM_NAME_COLLATOR = new Intl.Collator(undefined, {
   numeric: true,
@@ -27,9 +27,9 @@ function bucketFromFirstPos(position = '') {
   return null;
 }
 
-function sortByFranchiseName(a, b) {
-  const teamA = TEAM_NAME[a?.team] ?? '';
-  const teamB = TEAM_NAME[b?.team] ?? '';
+function sortByTeamName(a, b) {
+  const teamA = TEAM_SORT_NAME[a?.team] ?? TEAM_NAME[a?.team] ?? '';
+  const teamB = TEAM_SORT_NAME[b?.team] ?? TEAM_NAME[b?.team] ?? '';
 
   return (
     TEAM_NAME_COLLATOR.compare(teamA, teamB) ||
@@ -51,7 +51,7 @@ export default function SidePanel({
   const short = titleMobile ?? TEAM_ABBR[franchise] ?? '#';
 
   const roster = [...team, ...(rookie ? [rookie] : [])].filter(Boolean);
-  const orderedRoster = [...roster].sort(sortByFranchiseName);
+  const orderedRoster = [...roster].sort(sortByTeamName);
 
   const slots = [
     ...orderedRoster,

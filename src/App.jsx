@@ -3,31 +3,116 @@ import React, { useEffect, useMemo, useState } from 'react';
 import DraftBoard from './components/DraftBoard.jsx';
 import SidePanel from './components/SidePanel.jsx';
 import Modal from './components/Modal.jsx';
-import { generatePlayers } from './data/generatePlayers.js';
+import { generatePlayers, playerHistoryKey } from './data/generatePlayers.js';
 import { ALL_PLAYERS } from './data/players.js';
-import { TEAM_NAME, TEAM_ABBR, randomFranchise } from './data/teams.js';
+import { TEAM_NAME, TEAM_ABBR, FRANCHISE_SLUGS } from './data/teams.js';
 
 const BOARD_SIZE = 36;
 const DRAFT_PICKS_PER_TEAM = 12;
+const PLAYER_COOLDOWN_BOARDS = 3;
 const BOARD_STORAGE_KEY = '2k26-draft-board-state-v2';
+const BACKLOG_STORAGE_KEY = '2k26-draft-backlog-v1';
 const OLD_TEAM_STORAGE_KEY = '2k26-draft-saved-franchises';
 
 function randomStartingTeam() {
   return Math.random() < 0.5 ? 1 : 2;
 }
 
-function makeRandomMatchup() {
-  const franchise1 = randomFranchise();
-  const franchise2 = randomFranchise([franchise1]);
-  return { franchise1, franchise2 };
+function randomItem(items) {
+  if (!items.length) return null;
+  return items[Math.floor(Math.random() * items.length)] ?? null;
+}
+
+function createEmptyBacklog() {
+  return {
+    playerCooldowns: {},
+    usedFranchises: [],
+  };
+}
+
+function normalizeBacklog(value) {
+  const validFranchises = new Set(FRANCHISE_SLUGS);
+  const usedFranchises = Array.isArray(value?.usedFranchises)
+    ? [...new Set(value.usedFranchises.filter((slug) => validFranchises.has(slug)))]
+    : [];
+
+  const playerCooldowns = Object.fromEntries(
+    Object.entries(value?.playerCooldowns ?? {})
+      .map(([key, boardsLeft]) => [key, Math.floor(Number(boardsLeft))])
+      .filter(([, boardsLeft]) => boardsLeft >= 1 && boardsLeft <= PLAYER_COOLDOWN_BOARDS)
+  );
+
+  return { playerCooldowns, usedFranchises };
 }
 
 function isValidMatchup(matchup) {
   return !!(
     matchup?.franchise1 &&
     matchup?.franchise2 &&
-    matchup.franchise1 !== matchup.franchise2
+    matchup.franchise1 !== matchup.franchise2 &&
+    FRANCHISE_SLUGS.includes(matchup.franchise1) &&
+    FRANCHISE_SLUGS.includes(matchup.franchise2)
   );
+}
+
+function addMatchupToRotation(backlog, matchup) {
+  if (!isValidMatchup(matchup)) return normalizeBacklog(backlog);
+
+  const normalized = normalizeBacklog(backlog);
+  return {
+    ...normalized,
+    usedFranchises: [
+      ...new Set([
+        ...normalized.usedFranchises,
+        matchup.franchise1,
+        matchup.franchise2,
+      ]),
+    ],
+  };
+}
+
+function makeRotatingMatchup(backlog) {
+  const normalized = normalizeBacklog(backlog);
+  const used = new Set(normalized.usedFranchises);
+  let available = FRANCHISE_SLUGS.filter((slug) => !used.has(slug));
+  let cycleBase = normalized.usedFranchises;
+
+  // A normal cycle removes two teams at a time. This fallback also protects
+  // older or manually edited saved data that leaves fewer than two available.
+  if (available.length < 2) {
+    cycleBase = [];
+    available = [...FRANCHISE_SLUGS];
+  }
+
+  const franchise1 = randomItem(available);
+  const franchise2 = randomItem(available.filter((slug) => slug !== franchise1));
+  const matchup = { franchise1, franchise2 };
+
+  return {
+    matchup,
+    backlog: {
+      ...normalized,
+      usedFranchises: [...new Set([...cycleBase, franchise1, franchise2])],
+    },
+  };
+}
+
+function advancePlayerBacklog(backlog, draftedPlayers) {
+  const normalized = normalizeBacklog(backlog);
+  const playerCooldowns = {};
+
+  Object.entries(normalized.playerCooldowns).forEach(([key, boardsLeft]) => {
+    if (boardsLeft > 1) playerCooldowns[key] = boardsLeft - 1;
+  });
+
+  draftedPlayers.forEach((player) => {
+    playerCooldowns[playerHistoryKey(player)] = PLAYER_COOLDOWN_BOARDS;
+  });
+
+  return {
+    ...normalized,
+    playerCooldowns,
+  };
 }
 
 function readSavedMatchup() {
@@ -47,21 +132,39 @@ function readSavedMatchup() {
   }
 }
 
-function makeFreshBoardState(matchup = null) {
-  const nextMatchup = isValidMatchup(matchup) ? matchup : makeRandomMatchup();
+function readSavedBacklog() {
+  try {
+    const raw = localStorage.getItem(BACKLOG_STORAGE_KEY);
+    return raw ? normalizeBacklog(JSON.parse(raw)) : createEmptyBacklog();
+  } catch {
+    return createEmptyBacklog();
+  }
+}
+
+function makeFreshBoardState({ backlog = createEmptyBacklog(), matchup = null } = {}) {
+  const normalizedBacklog = normalizeBacklog(backlog);
+  const rotation = isValidMatchup(matchup)
+    ? {
+        matchup,
+        backlog: addMatchupToRotation(normalizedBacklog, matchup),
+      }
+    : makeRotatingMatchup(normalizedBacklog);
 
   return {
-    players: generatePlayers(BOARD_SIZE),
+    players: generatePlayers(BOARD_SIZE, {
+      playerCooldowns: rotation.backlog.playerCooldowns,
+    }),
     team1: [],
     team2: [],
     draftHistory: [],
     activeTeam: randomStartingTeam(),
-    matchup: nextMatchup,
+    matchup: rotation.matchup,
+    backlog: rotation.backlog,
     boardVersion: Date.now(),
   };
 }
 
-function readSavedBoardState() {
+function readSavedBoardState(fallbackBacklog) {
   try {
     const raw = localStorage.getItem(BOARD_STORAGE_KEY);
     if (!raw) return null;
@@ -70,6 +173,8 @@ function readSavedBoardState() {
     if (!isValidMatchup(saved?.matchup)) return null;
     if (!Array.isArray(saved.players) || saved.players.length === 0) return null;
 
+    const savedBacklog = normalizeBacklog(saved.backlog ?? fallbackBacklog);
+
     return {
       players: saved.players,
       team1: Array.isArray(saved.team1) ? saved.team1 : [],
@@ -77,6 +182,7 @@ function readSavedBoardState() {
       draftHistory: Array.isArray(saved.draftHistory) ? saved.draftHistory : [],
       activeTeam: saved.activeTeam === 2 ? 2 : 1,
       matchup: saved.matchup,
+      backlog: addMatchupToRotation(savedBacklog, saved.matchup),
       boardVersion: Number(saved.boardVersion) || 0,
     };
   } catch {
@@ -87,7 +193,18 @@ function readSavedBoardState() {
 function saveBoardState(boardState) {
   try {
     localStorage.setItem(BOARD_STORAGE_KEY, JSON.stringify(boardState));
+    localStorage.setItem(BACKLOG_STORAGE_KEY, JSON.stringify(boardState.backlog));
     localStorage.setItem(OLD_TEAM_STORAGE_KEY, JSON.stringify(boardState.matchup));
+  } catch {
+    // localStorage can fail in private windows or restricted browsers.
+  }
+}
+
+function clearAllSavedState() {
+  try {
+    localStorage.removeItem(BOARD_STORAGE_KEY);
+    localStorage.removeItem(BACKLOG_STORAGE_KEY);
+    localStorage.removeItem(OLD_TEAM_STORAGE_KEY);
   } catch {
     // localStorage can fail in private windows or restricted browsers.
   }
@@ -103,9 +220,16 @@ function rookieFor(franchise) {
 }
 
 export default function App() {
-  const [initialBoard] = useState(() => (
-    readSavedBoardState() ?? makeFreshBoardState(readSavedMatchup())
-  ));
+  const [initialBoard] = useState(() => {
+    const savedBacklog = readSavedBacklog();
+    return (
+      readSavedBoardState(savedBacklog) ??
+      makeFreshBoardState({
+        backlog: savedBacklog,
+        matchup: readSavedMatchup(),
+      })
+    );
+  });
 
   const [players, setPlayers] = useState(initialBoard.players);
   const [team1, setTeam1] = useState(initialBoard.team1);
@@ -113,8 +237,10 @@ export default function App() {
   const [draftHistory, setDraftHistory] = useState(initialBoard.draftHistory);
   const [activeTeam, setActiveTeam] = useState(initialBoard.activeTeam);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [wipeConfirmOpen, setWipeConfirmOpen] = useState(false);
   const [boardVersion, setBoardVersion] = useState(initialBoard.boardVersion);
   const [matchup, setMatchup] = useState(initialBoard.matchup);
+  const [backlog, setBacklog] = useState(initialBoard.backlog);
 
   const { franchise1, franchise2 } = matchup;
 
@@ -126,9 +252,10 @@ export default function App() {
       draftHistory,
       activeTeam,
       matchup,
+      backlog,
       boardVersion,
     });
-  }, [players, team1, team2, draftHistory, activeTeam, matchup, boardVersion]);
+  }, [players, team1, team2, draftHistory, activeTeam, matchup, backlog, boardVersion]);
 
   const rookie1 = rookieFor(franchise1);
   const rookie2 = rookieFor(franchise2);
@@ -143,6 +270,18 @@ export default function App() {
   const activeFranchise = activeTeam === 1 ? franchise1 : franchise2;
 
   const canPick = (player) => !player.taken && picksRemaining > 0;
+
+  const applyBoardState = (nextState) => {
+    saveBoardState(nextState);
+    setMatchup(nextState.matchup);
+    setPlayers(nextState.players);
+    setTeam1(nextState.team1);
+    setTeam2(nextState.team2);
+    setDraftHistory(nextState.draftHistory);
+    setActiveTeam(nextState.activeTeam);
+    setBacklog(nextState.backlog);
+    setBoardVersion(nextState.boardVersion);
+  };
 
   const takePlayer = (id) => {
     const player = players.find((candidate) => candidate.id === id);
@@ -183,16 +322,16 @@ export default function App() {
   };
 
   const resetBoard = () => {
-    const nextState = makeFreshBoardState();
-    saveBoardState(nextState);
+    const draftedPlayers = [...team1, ...team2];
+    const advancedBacklog = advancePlayerBacklog(backlog, draftedPlayers);
+    const nextState = makeFreshBoardState({ backlog: advancedBacklog });
+    applyBoardState(nextState);
+  };
 
-    setMatchup(nextState.matchup);
-    setPlayers(nextState.players);
-    setTeam1(nextState.team1);
-    setTeam2(nextState.team2);
-    setDraftHistory(nextState.draftHistory);
-    setActiveTeam(nextState.activeTeam);
-    setBoardVersion(nextState.boardVersion);
+  const wipeSavedData = () => {
+    clearAllSavedState();
+    const nextState = makeFreshBoardState({ backlog: createEmptyBacklog() });
+    applyBoardState(nextState);
   };
 
   return (
@@ -255,6 +394,15 @@ export default function App() {
             >
               New Board
             </button>
+
+            <button
+              type="button"
+              onClick={() => setWipeConfirmOpen(true)}
+              title="Clear the current board, player cooldowns, and used-team rotation"
+              className="px-2 py-1 rounded-md text-xs border border-black/20 bg-[#efe4cb] text-black opacity-75 hover:opacity-100"
+            >
+              Reset Saved Data
+            </button>
           </div>
 
           <DraftBoard
@@ -281,7 +429,8 @@ export default function App() {
         onClose={() => setConfirmOpen(false)}
       >
         <p className="text-sm opacity-90">
-          This will clear current picks, generate a new random board, and reroll the saved teams.
+          This will save the drafted players to the three-board odds backlog,
+          clear the current picks, and assign two unused franchises.
         </p>
 
         <div className="mt-4 flex justify-end gap-2">
@@ -301,6 +450,37 @@ export default function App() {
             }}
           >
             Yes, New Board
+          </button>
+        </div>
+      </Modal>
+
+      <Modal
+        open={wipeConfirmOpen}
+        title="Reset all saved draft data?"
+        onClose={() => setWipeConfirmOpen(false)}
+      >
+        <p className="text-sm opacity-90">
+          This clears the current draft, all player odds cooldowns, and the
+          entire used-franchise rotation. A completely fresh board will start.
+        </p>
+
+        <div className="mt-4 flex justify-end gap-2">
+          <button
+            type="button"
+            className="px-3 py-1.5 rounded-md border border-black/20 bg-[#efe4cb]"
+            onClick={() => setWipeConfirmOpen(false)}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            className="px-3 py-1.5 rounded-md border border-black/20 bg-[#e1c67d] text-black"
+            onClick={() => {
+              setWipeConfirmOpen(false);
+              wipeSavedData();
+            }}
+          >
+            Reset Everything
           </button>
         </div>
       </Modal>
